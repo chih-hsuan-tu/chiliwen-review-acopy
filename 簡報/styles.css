@@ -1,0 +1,652 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  font-family: 'Noto Sans TC', 'Noto Sans', system-ui, -apple-system, sans-serif;
+  color: #333;
+  background: #c8ccd4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* === 自動縮放容器 === */
+#stage {
+  width: 1920px;
+  transform-origin: 0 0;
+  padding: 24px 0 0;
+}
+.slide { margin-left: auto; margin-right: auto; }
+
+/* === 頁面共用 === */
+.slide {
+  width: 1920px;
+  height: 1080px;
+  background: #F5F7FB;
+  position: relative;
+  margin: 0 auto 28px;
+  padding: 70px 90px 90px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  transform-origin: top center;
+}
+.tab {
+  color: #002598;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.title {
+  color: #1a1a1a;
+  font-size: 52px;
+  font-weight: 700;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #c8d2e6;
+  margin-bottom: 50px;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+}
+.bottom-note {
+  position: absolute;
+  bottom: 42px;
+  left: 90px;
+  right: 90px;
+  font-size: 26px;
+  color: #525252;
+  font-style: italic;
+}
+
+/* === 條列式 === */
+.bullets { list-style: none; padding-left: 0; }
+.bullets > li {
+  font-size: 38px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 30px;
+  padding-left: 48px;
+  position: relative;
+  line-height: 1.5;
+}
+.bullets > li::before {
+  content: '●';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  color: #002598;
+  font-size: 28px;
+}
+.bullets > li > ul { padding-left: 8px; margin-top: 14px; list-style: none; }
+.bullets > li > ul > li {
+  font-size: 26px;
+  font-weight: 400;
+  color: #3f3f3f;
+  margin-bottom: 12px;
+  padding-left: 36px;
+  position: relative;
+  line-height: 1.65;
+}
+.bullets > li > ul > li::before {
+  content: '○';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  color: #888;
+  font-size: 22px;
+}
+
+/* === 封面 === */
+.cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 120px;
+}
+.cover-num {
+  font-size: 180px;
+  font-weight: 900;
+  color: #002598;
+  line-height: 1.1;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+}
+.cover-divider {
+  width: 820px;
+  height: 2px;
+  background: #b0bcd6;
+  margin: 16px 0 56px;
+}
+.cover-title {
+  font-size: 64px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 60px;
+  letter-spacing: 1px;
+  line-height: 1.4;
+}
+.cover-author {
+  font-size: 36px;
+  color: #3f3f3f;
+  letter-spacing: 1px;
+}
+
+/* === 卡片網格（2×2 或 1×N）=== */
+.tools-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  margin-top: 14px;
+}
+.tools-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.tools-grid.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.tool-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #dde3ef;
+}
+.tool-card-header {
+  background: #002598;
+  color: white;
+  padding: 26px 40px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.tool-card-body {
+  padding: 32px 40px 36px;
+  background: #F8FAFE;
+  min-height: 180px;
+}
+.tool-card-en {
+  font-size: 24px;
+  color: #002598;
+  font-weight: 700;
+  margin-bottom: 14px;
+  letter-spacing: 0.3px;
+}
+.tool-card-desc {
+  font-size: 26px;
+  color: #333333;
+  line-height: 1.6;
+}
+
+/* === 方法論分述（簡版）=== */
+.def-label {
+  display: inline-block;
+  background: #002598;
+  color: white;
+  font-size: 26px;
+  font-weight: 700;
+  padding: 12px 36px;
+  margin-bottom: 26px;
+  letter-spacing: 0.5px;
+}
+.def-text {
+  font-size: 38px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+.steps-box {
+  background: #ECEFF7;
+  padding: 40px 50px;
+  border-radius: 6px;
+  margin-bottom: 32px;
+}
+.steps-label {
+  display: inline-block;
+  background: #C49A36;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 10px 30px;
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+}
+.steps-list { list-style: none; padding-left: 0; }
+.steps-list li {
+  font-size: 30px;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+  padding-left: 42px;
+  position: relative;
+  line-height: 1.6;
+}
+.steps-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #C49A36;
+  font-size: 28px;
+}
+.note-quote {
+  background: #fff;
+  border-left: 6px solid #002598;
+  padding: 26px 36px;
+  font-size: 28px;
+  color: #333;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+/* === 方法論分述（完整版 - 五色塊）=== */
+.principle-box {
+  background: #ECEFF7;
+  padding: 28px 44px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+}
+.principle-label {
+  display: inline-block;
+  background: #C49A36;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 10px 30px;
+  margin-bottom: 18px;
+  letter-spacing: 0.5px;
+}
+.principle-list { list-style: none; padding-left: 0; }
+.principle-list li {
+  font-size: 26px;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+  padding-left: 36px;
+  position: relative;
+  line-height: 1.55;
+}
+.principle-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #C49A36;
+  font-size: 26px;
+}
+.examples-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  margin-top: 10px;
+}
+.ex-good, .ex-bad {
+  padding: 26px 34px;
+  border-radius: 8px;
+  min-height: 180px;
+}
+.ex-good { background: #EAF6EE; border: 2px solid #b8d9bf; }
+.ex-bad { background: #FBEAEA; border: 2px solid #e6c0c0; }
+.ex-label {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+.ex-good .ex-label { color: #2E7D32; }
+.ex-bad .ex-label { color: #C62828; }
+.ex-text {
+  font-size: 28px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* === KTA 三點橫排 === */
+.kta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 36px;
+  margin-top: 60px;
+}
+.kta-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+.kta-grid.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.kta-card {
+  background: white;
+  border: 1px solid #dde3ef;
+  border-top: 6px solid #002598;
+  border-radius: 6px;
+  padding: 44px 36px 48px;
+  min-height: 380px;
+}
+.kta-num {
+  font-size: 52px;
+  font-weight: 900;
+  color: #002598;
+  margin-bottom: 18px;
+  line-height: 1;
+}
+.kta-head {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+.kta-text {
+  font-size: 26px;
+  color: #3f3f3f;
+  line-height: 1.7;
+}
+
+/* === 行動建議 / 學習重點 條列卡片 === */
+.action-list { list-style: none; padding-left: 0; margin-top: 12px; }
+.action-list > li {
+  background: white;
+  border-left: 8px solid #002598;
+  padding: 32px 40px 32px 44px;
+  margin-bottom: 26px;
+  border-radius: 6px;
+  border-right: 1px solid #e0e6f0;
+  border-top: 1px solid #e0e6f0;
+  border-bottom: 1px solid #e0e6f0;
+}
+.action-list .head {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+}
+.action-list .desc {
+  font-size: 26px;
+  color: #3f3f3f;
+  line-height: 1.7;
+}
+
+/* === 表格 === */
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.matrix-table thead th {
+  background: #002598;
+  color: white;
+  padding: 22px 28px;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: left;
+  letter-spacing: 0.3px;
+}
+.matrix-table tbody tr:nth-child(odd) { background: #F8FAFE; }
+.matrix-table tbody tr:nth-child(even) { background: #F2F4FB; }
+.matrix-table tbody td {
+  padding: 22px 28px;
+  font-size: 26px;
+  color: #333;
+  line-height: 1.55;
+  vertical-align: top;
+  border-bottom: 1px solid #e7ecf5;
+}
+.matrix-table tbody td:first-child {
+  font-weight: 700;
+  color: #1a1a1a;
+  width: 22%;
+}
+.matrix-table tbody td.highlight {
+  color: #002598;
+  font-weight: 700;
+}
+
+/* === 矩陣四象限 === */
+.quadrant {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr;
+  grid-template-rows: 60px 1fr 1fr;
+  gap: 0;
+  margin-top: 20px;
+  height: 720px;
+}
+.q-y-axis {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  font-size: 28px;
+  font-weight: 700;
+  color: #002598;
+}
+.q-x-axis {
+  grid-column: 2 / span 2;
+  grid-row: 1;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #002598;
+  padding-top: 16px;
+}
+.q-cell {
+  border: 1.5px solid #c8d2e6;
+  padding: 36px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.q-cell .q-num {
+  font-size: 48px;
+  font-weight: 900;
+  color: #002598;
+  margin-bottom: 14px;
+}
+.q-cell .q-title {
+  font-size: 38px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+}
+.q-cell .q-desc {
+  font-size: 30px;
+  color: #3f3f3f;
+  line-height: 1.6;
+}
+
+/* === 大數據展示 === */
+.stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 36px;
+  margin-top: 30px;
+}
+.stat-card {
+  background: white;
+  border-radius: 8px;
+  padding: 50px 36px;
+  text-align: center;
+  border: 1px solid #dde3ef;
+}
+.stat-num {
+  font-size: 110px;
+  font-weight: 900;
+  color: #002598;
+  line-height: 1;
+  margin-bottom: 18px;
+}
+.stat-label {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 14px;
+}
+.stat-source {
+  font-size: 26px;
+  color: #525252;
+  line-height: 1.6;
+}
+
+/* === 階段進度（職涯五階段）=== */
+.stage-list { list-style: none; padding: 0; margin-top: 10px; }
+.stage-list > li {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 6px;
+  padding: 18px 36px;
+  margin-bottom: 14px;
+  border-left: 8px solid #002598;
+  border-right: 1px solid #e0e6f0;
+  border-top: 1px solid #e0e6f0;
+  border-bottom: 1px solid #e0e6f0;
+}
+.stage-list .stage-num {
+  font-size: 44px;
+  font-weight: 900;
+  color: #002598;
+  width: 90px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.stage-list .stage-body { flex: 1; }
+.stage-list .stage-head {
+  font-size: 30px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+}
+.stage-list .stage-desc {
+  font-size: 28px;
+  color: #3f3f3f;
+  line-height: 1.5;
+}
+
+/* === 進階大人之路（橫向）=== */
+.maturity-row {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr 60px 1fr;
+  align-items: stretch;
+  margin-top: 50px;
+  gap: 0;
+}
+.maturity-card {
+  background: white;
+  border-radius: 8px;
+  padding: 56px 40px;
+  min-height: 260px;
+  text-align: center;
+  border: 2px solid #c8d2e6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.maturity-card.highlight {
+  background: #002598;
+  color: white;
+  border-color: #002598;
+}
+.maturity-card .m-title {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.maturity-card .m-desc {
+  font-size: 28px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+.maturity-card.highlight .m-desc { opacity: 0.85; }
+.maturity-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 60px;
+  color: #b0bcd6;
+  font-weight: 300;
+}
+
+/* === BIC 範例對話 === */
+.bic-example {
+  background: white;
+  border-radius: 8px;
+  padding: 40px 50px;
+  border-left: 8px solid #002598;
+  margin-top: 14px;
+}
+.bic-row {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  align-items: start;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+.bic-row:last-child { margin-bottom: 0; }
+.bic-tag {
+  background: #002598;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 8px 0;
+  text-align: center;
+  border-radius: 4px;
+}
+.bic-text {
+  font-size: 26px;
+  color: #333;
+  line-height: 1.7;
+  padding-top: 4px;
+}
+
+/* === 反面提醒清單（禁忌行為）=== */
+.avoid-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.avoid-list > li {
+  background: #FBEAEA;
+  border: 2px solid #e6c0c0;
+  border-radius: 8px;
+  padding: 28px 36px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.avoid-list .ax {
+  font-size: 36px;
+  font-weight: 900;
+  color: #C62828;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.avoid-list .ax-text {
+  font-size: 26px;
+  color: #1a1a1a;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* === 備選頁標記 === */
+.draft-mark {
+  position: absolute;
+  top: 36px;
+  right: 90px;
+  background: #C49A36;
+  color: white;
+  padding: 10px 26px;
+  font-size: 22px;
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+/* === 頁碼 === */
+.page-num {
+  position: absolute;
+  bottom: 42px;
+  right: 90px;
+  font-size: 22px;
+  color: #aab1bf;
+  font-weight: 500;
+}
+
+/* === 高亮詞 === */
+.h-blue { color: #002598; font-weight: 700; }
+.h-gold { color: #C49A36; font-weight: 700; }

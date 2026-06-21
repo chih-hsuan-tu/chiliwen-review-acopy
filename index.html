@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>齊立文｜L1-1 A copy 審核</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif; margin: 0; background: #f4f5f7; color: #1f2937; font-size: 14px; }
+  header { background: #1f2937; color: #fff; padding: 12px 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; position: sticky; top: 0; z-index: 100; }
+  header h1 { font-size: 15px; margin: 0; font-weight: 600; }
+  header .meta { font-size: 12px; color: #cbd5e1; }
+  header .btns { margin-left: auto; display: flex; gap: 8px; }
+  header button { padding: 6px 12px; border: 0; border-radius: 4px; cursor: pointer; font-size: 12px; color: #fff; }
+  .btn-save { background: #10b981; }
+  .btn-export { background: #3b82f6; }
+  .btn-print { background: #f59e0b; }
+  .btn-reset { background: #9333ea; }
+  .savetime { font-size: 12px; color: #cbd5e1; margin-left: 8px; }
+  .wrap { max-width: 1840px; margin: 0 auto; padding: 16px; display: grid; grid-template-columns: minmax(380px, 46%) 1fr; grid-template-rows: auto 1fr; column-gap: 16px; row-gap: 10px; align-items: start; }
+  .stage { grid-column: 1; grid-row: 1 / span 2; position: sticky; top: 60px; height: calc(100vh - 80px); display: flex; flex-direction: column; gap: 12px; }
+  .fbhead { grid-column: 2; grid-row: 1; }
+  #t { grid-column: 2; grid-row: 2; align-self: start; }
+  .col-video { width: 100%; }
+  .col-slide { width: 100%; min-height: 0; flex: 1; display: flex; flex-direction: column; }
+  @media (max-width: 1200px) { .wrap { display: block; } .stage { position: static; height: auto; } .col-slide { display: block; } .framewrap { display: block; } .frameratio { aspect-ratio: auto; height: auto; padding-top: 56.25%; } }
+  .videobox { background: #000; border-radius: 8px 8px 0 0; overflow: hidden; }
+  video { width: 100%; display: block; max-height: 36vh; background: #000; }
+  .scrubrow { background: #fff; border: 1px solid #e5e7eb; border-bottom: 0; padding: 8px 14px 2px; display: flex; align-items: center; gap: 10px; }
+  .scrubrow input[type=range] { flex: 1; height: 6px; cursor: pointer; accent-color: #dc2626; }
+  .scrubrow .time { font-family: "SF Mono", Menlo, monospace; font-size: 12px; color: #1f2937; min-width: 110px; text-align: right; }
+  .ctrl { background: #fff; border: 1px solid #e5e7eb; border-top: 0; border-radius: 0 0 8px 8px; padding: 8px 14px 12px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .ctrl button { padding: 6px 10px; background: #475569; color: #fff; border: 0; border-radius: 4px; cursor: pointer; font-size: 12px; }
+  .ctrl button.play { background: #1f2937; min-width: 44px; font-size: 14px; }
+  .ctrl button.markStart { background: #dc2626; }
+  .ctrl button.markEnd { background: #ef4444; }
+  .ctrl select { padding: 5px; border-radius: 4px; border: 1px solid #cbd5e1; }
+  .ctrl .pending { font-size: 12px; color: #b91c1c; font-weight: 600; margin-left: 4px; }
+  .slidehead { display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid #e5e7eb; border-bottom: 0; border-radius: 8px 8px 0 0; padding: 8px 12px; }
+  .slidehead .lbl { font-weight: 600; font-size: 13px; }
+  .slidehead .pg { font-family: "SF Mono", Menlo, monospace; font-size: 12px; color: #b45309; }
+  .slidehead button { padding: 4px 10px; background: #475569; color: #fff; border: 0; border-radius: 4px; cursor: pointer; font-size: 12px; }
+  .slidehead .sync { margin-left: auto; font-size: 12px; color: #4b5563; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+  .slidehead a { font-size: 12px; color: #2563eb; text-decoration: none; }
+  .framewrap { background: #fff; border: 1px solid #e5e7eb; border-radius: 0 0 8px 8px; overflow: hidden; flex: 1; min-height: 0; display: flex; justify-content: center; }
+  .frameratio { position: relative; height: 100%; aspect-ratio: 16 / 9; max-width: 100%; background: #fff; }
+  .frameratio iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .fbhead { display: flex; align-items: center; gap: 12px; margin: 0 0 8px; flex-wrap: wrap; }
+  .fbhead h2 { font-size: 15px; margin: 0; }
+  .fbhead .count { font-size: 12px; color: #6b7280; }
+  .fbhead .tools { margin-left: auto; display: flex; gap: 8px; }
+  .fbhead .tools button { padding: 5px 10px; background: #e5e7eb; border: 0; border-radius: 4px; cursor: pointer; font-size: 12px; }
+  .fbhead .tools .btn-col { background: #cffafe; color: #0e7490; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; font-size: 13px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  th, td { padding: 9px 12px; border-bottom: 1px solid #eef0f3; vertical-align: top; text-align: left; }
+  th { background: #f3f4f6; font-weight: 600; color: #374151; position: relative; white-space: nowrap; }
+  th .colctl { display: inline-flex; gap: 3px; margin-left: 6px; vertical-align: middle; }
+  th .colctl button { font-size: 10px; line-height: 1; border: 0; border-radius: 3px; cursor: pointer; padding: 2px 5px; }
+  th .colctl .addcol { background: #cffafe; color: #0e7490; }
+  th .colctl .delcol { background: #fee2e2; color: #b91c1c; }
+  th .colname { outline: none; }
+  th .colname:focus { background: #fff; box-shadow: 0 0 0 2px #93c5fd; border-radius: 3px; padding: 0 2px; }
+  td.range { font-family: "SF Mono", Menlo, monospace; font-size: 12px; white-space: nowrap; color: #1d4ed8; cursor: pointer; min-width: 130px; }
+  td.range:hover { background: #eff6ff; }
+  td.slide { font-family: "SF Mono", Menlo, monospace; font-size: 13px; text-align: center; min-width: 70px; color: #b45309; cursor: pointer; }
+  td.slide:hover { background: #fffbeb; }
+  td.fb { width: 100%; }
+  td.fb:focus, td.extra:focus, td.slide:focus { outline: 2px solid #93c5fd; outline-offset: -2px; border-radius: 3px; }
+  td.extra { min-width: 90px; }
+  td.act { white-space: nowrap; text-align: center; min-width: 72px; }
+  td.act button { padding: 3px 8px; background: #fee2e2; color: #b91c1c; border: 0; border-radius: 3px; cursor: pointer; font-size: 12px; margin: 0 1px; }
+  td.act .addbtn { background: #dcfce7; color: #15803d; }
+  th.slide-h, th.act-h { text-align: center; }
+  tr:last-child td { border-bottom: 0; }
+  .empty td { text-align: center; color: #9ca3af; font-style: italic; padding: 20px; }
+  @media print {
+    header, .scrubrow, .ctrl, .fbhead .tools, td.act, th.act-h, th .colctl, .slidehead { display: none !important; }
+    body { background: #fff; }
+    .wrap { max-width: 100%; padding: 0; display: block; }
+    .stage { display: none; }
+    table { box-shadow: none; border: 1px solid #000; font-size: 11px; }
+    th, td { border: 1px solid #888; }
+    th { background: #e5e7eb !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    tr { page-break-inside: avoid; }
+    @page { margin: 14mm; }
+  }
+
+  .videobox, .scrubrow, .ctrl { display:none !important; }
+  .stage { height:auto !important; }
+</style>
+</head>
+<body>
+<header>
+  <h1>齊立文｜高勝率的決策思維</h1>
+  <span class="meta">L1-1 為什麼要學決策｜A copy 審核（剪輯師版）</span>
+  <div class="btns">
+    <button class="btn-export" onclick="exportNotes()">匯出回饋清單</button>
+    <button class="btn-print" onclick="window.print()">列印 PDF</button>
+    </div>
+</header>
+<div class="wrap">
+  <div class="stage">
+    <div class="col-video">
+      <div class="videobox">
+        <video id="v" data-novideo="1" preload="metadata" playsinline=""></video>
+      </div>
+      <div class="scrubrow">
+        <input type="range" id="scrub" value="0" min="0" max="100" step="0.1" title="拖曳快轉">
+        <span class="time" id="time">00:00 / 19:14</span>
+      </div>
+      <div class="ctrl">
+        <button class="play" id="btnPlay" onclick="togglePlay()" title="空白鍵">⏸</button>
+        <button onclick="seekRel(-10)">↩ 10s</button>
+        <button onclick="seekRel(-3)">↩ 3s</button>
+        <button onclick="seekRel(3)">3s →</button>
+        <button onclick="seekRel(10)">10s →</button>
+        <select onchange="setRate(this.value)" title="播放速度">
+          <option value="0.75">0.75×</option>
+          <option value="1" selected="">1×</option>
+          <option value="1.25">1.25×</option>
+          <option value="1.5">1.5×</option>
+          <option value="2">2×</option>
+        </select>
+        <button class="markStart" onclick="markStart()" title="D">✂ 起點 (D)</button>
+        <button class="markEnd" onclick="markEnd()" title="F">✂ 終點 (F)</button>
+        <span class="pending" id="pending"></span>
+      </div>
+    </div>
+    <div class="col-slide">
+      <div class="slidehead">
+        <span class="lbl">簡報</span>
+        <span class="pg" id="pg">P1 / 18</span>
+        <button onclick="prevSlide()">‹ 上頁</button>
+        <button onclick="nextSlide()">下頁 ›</button>
+        
+        <a href="簡報/單元1-1_為什麼要學決策_v2.html" target="_blank">原檔 ↗</a>
+      </div>
+      <div class="framewrap">
+        <div class="frameratio">
+          <iframe id="sf" src="簡報/單元1-1_為什麼要學決策_v2.html?embed=1" title="簡報"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fbhead">
+    <h2>審核回饋</h2>
+    <span class="count" id="count">20 則</span>
+    
+  </div>
+  <table id="t"><thead>
+      <tr><th>影片區間（起–訖）</th><th class="slide-h">簡報頁</th><th>回饋內容</th><th><span class="colname">版面</span></th></tr>
+    </thead>
+    <tbody id="tb"><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處"><br></td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)"><br></td><td class="fb">新商業學校 Logo 動畫（需有配樂）</td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處"></td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)"></td><td class="fb">課程單元頁<br>1. 置換為新版頁面<br>2. 需有配樂</td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處"></td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)"></td><td class="fb">影片子母框需要放老師的 title<br><br>《經理人月刊》總編輯<br>齊立文</td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">00:00-00:29</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">X</td><td class="fb"></td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">00:30-01:34</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">2</td><td class="fb"></td><td class="extra">子母</td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">01:32-02:03</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">3</td><td class="fb">【建議刪除．省約 31 秒】「如果你是主管的話……更絕對絕對不要這樣做」整段（主管別自己做，與後面機制段重複）。保留下一句「能夠成為主管」。</td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">01:34-02:32</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">3</td><td class="fb"></td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">02:33-02:34</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">X</td><td class="fb">剪掉空白</td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">02:35-04:13</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">4</td><td class="fb"></td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">03:23-03:52</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">4</td><td class="fb">【建議刪除．省約 29 秒】「你可以試著想想看……形成了一個惡性迴圈」整段（救火惡性迴圈，與後面盲點段重複）。保留下一句「所以精準決策」。</td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">04:13-04:44</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">5</td><td class="fb"></td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">04:44-05:47</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">6</td><td class="fb"></td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">05:47-07:48</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">7</td><td class="fb"></td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">07:48-09:21</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">11</td><td class="fb"></td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">09:21-10:27</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">12</td><td class="fb"></td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">10:27-12:00</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">14</td><td class="fb"></td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">12:00-16:07</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">15</td><td class="fb"></td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">13:29-14:23</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">15</td><td class="fb">【建議刪除．省約 54 秒】「其實這個我認為……那一份原則清單來做決策」整段（雷・達利歐《原則》案例）。保留下一句「這種基於原則的決策系統」。</td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">14:34-16:11</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">15</td><td class="fb">【建議刪除．省約 1 分 37 秒】「前面提到的亞馬遜的創辦人貝佐斯……你最後錯失了機會」整段（貝佐斯 70% 法則，與歐巴馬 51% 同論點）。保留下一句「好，那我們回到……歐巴馬」。</td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">16:07-17:42</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">16</td><td class="fb"></td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">17:42-18:11</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">17</td><td class="fb"></td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">18:11-19:14</td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">18</td><td class="fb"></td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處"></td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)"></td><td class="fb">1. 單元學習重點統一放 6 秒，不會有老師口白<br>2. 需有配樂</td><td class="extra"></td></tr><tr><td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處"></td><td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)"></td><td class="fb">新商業學校 Logo 動畫</td><td class="extra"></td></tr></tbody></table>
+</div>
+<script>
+const SKEY = 'review_chiliwen_L1-1_v2';
+const NPAGES = 19;
+const VEND = 1154;
+const MAP = [
+  { t: 0, page: 1, title: "封面" },
+  { t: 33, page: 2, title: "決策的普遍性" },
+  { t: 94, page: 3, title: "主管的角色" },
+  { t: 159, page: 4, title: "執行力是油門，決策力是方向盤" },
+  { t: 253, page: 5, title: "55% 對 45% 的複利" },
+  { t: 284, page: 6, title: "決策的難度（歐巴馬）" },
+  { t: 347, page: 7, title: "四個心理障礙" },
+  { t: 468, page: 11, title: "小結：把事情做對更要做對的事" },
+  { t: 561, page: 12, title: "系統一與系統二" },
+  { t: 627, page: 14, title: "猴子理論" },
+  { t: 720, page: 15, title: "機制與系統（原則＋70%）" },
+  { t: 967, page: 16, title: "歐巴馬 51% 流程" },
+  { t: 1062, page: 17, title: "DCR 模型" },
+  { t: 1091, page: 18, title: "三種工作者轉變" }
+];
+const EXPORT_TITLE = '齊立文 L1-1 A copy 審核回饋';
+const EXPORT_FILE = '齊立文_L1-1_審核回饋.txt';
+const SAVE_FILE = '齊立文_L1-1_審核.html';
+const v = document.getElementById('v');
+const scrub = document.getElementById('scrub');
+const sf = document.getElementById('sf');
+function fmt(s) { s = Math.max(0, Math.floor(s || 0)); return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
+function parseRange(txt) { const m = txt.match(/(\d+):(\d+)/); return m ? parseInt(m[1])*60 + parseInt(m[2]) : 0; }
+function togglePlay() { v.paused ? v.play() : v.pause(); }
+function seekRel(d) { v.currentTime = Math.max(0, Math.min(v.duration || 1e9, v.currentTime + d)); }
+function setRate(r) { v.playbackRate = parseFloat(r); }
+function seekTo(s) { v.currentTime = s; v.play(); }
+v.addEventListener('play', () => document.getElementById('btnPlay').textContent = '⏸');
+v.addEventListener('pause', () => document.getElementById('btnPlay').textContent = '▶');
+let dragging = false;
+function updTime() {
+  document.getElementById('time').textContent = fmt(v.currentTime) + ' / ' + fmt(v.duration);
+  if (!dragging && v.duration) scrub.value = (v.currentTime / v.duration) * 100;
+  syncSlide();
+}
+v.addEventListener('timeupdate', updTime);
+v.addEventListener('loadedmetadata', updTime);
+scrub.addEventListener('input', () => { dragging = true; if (v.duration) { v.currentTime = (scrub.value/100)*v.duration; } });
+scrub.addEventListener('change', () => { dragging = false; });
+let curMapIdx = 0;
+let frameReady = false;
+sf.addEventListener('load', () => { frameReady = true; goToPage(MAP[0].page); });
+function goToPage(page) {
+  document.getElementById('pg').textContent = 'P' + page + ' / ' + NPAGES;
+  if (frameReady && sf.contentWindow) sf.contentWindow.postMessage({ type: 'goto', page: page }, '*');
+}
+function syncSlide() {
+  if (!document.getElementById('autosync').checked) return;
+  let idx = 0;
+  for (let i = 0; i < MAP.length; i++) { if (v.currentTime >= MAP[i].t) idx = i; }
+  if (idx !== curMapIdx) { curMapIdx = idx; goToPage(MAP[idx].page); }
+}
+function prevSlide() { if (curMapIdx > 0) { curMapIdx--; seekTo(MAP[curMapIdx].t); goToPage(MAP[curMapIdx].page); } }
+function nextSlide() { if (curMapIdx < MAP.length - 1) { curMapIdx++; seekTo(MAP[curMapIdx].t); goToPage(MAP[curMapIdx].page); } }
+let pendingStart = null;
+function markStart() { pendingStart = v.currentTime; document.getElementById('pending').textContent = '起點 ' + fmt(pendingStart) + '，再按 F'; }
+function markEnd() {
+  if (pendingStart === null) { alert('請先按「起點 (D)」'); return; }
+  let a = Math.floor(pendingStart), b = Math.floor(v.currentTime); if (b < a) [a, b] = [b, a];
+  addRow(fmt(a) + '-' + fmt(b), 'X', '', true);
+  pendingStart = null; document.getElementById('pending').textContent = '';
+}
+// 每列尾巴的 ＋：在這一列正下方插入一個空白列，秒數留空、不連動任何其他列
+function addRowBelow(btn) {
+  clearEmpty();
+  const tr = btn.closest('tr');
+  const ntr = makeRow('', '', '');
+  tr.after(ntr);
+  updCount(); autoSave();
+  const c = ntr.querySelector('.range'); c.focus();
+}
+// 補上既有（含快取還原）列尾巴的 ＋ 按鈕
+function initActButtons() {
+  document.querySelectorAll('#tb tr:not(.empty) td.act').forEach(td => {
+    if (td.querySelector('.addbtn')) return;
+    const b = document.createElement('button');
+    b.className = 'addbtn'; b.textContent = '＋'; b.title = '在此列下方插入一列';
+    b.setAttribute('onclick', 'addRowBelow(this)');
+    td.insertBefore(b, td.firstChild);
+  });
+}
+function extraColCount() { return Math.max(0, document.querySelectorAll('#t thead th').length - 4); }
+function clearEmpty() { const e = document.querySelector('#tb .empty'); if (e) e.remove(); }
+function showEmptyIfNone() {
+  const tb = document.getElementById('tb');
+  if (!tb.querySelector('tr:not(.empty)')) {
+    tb.innerHTML = '<tr class="empty"><td colspan="' + document.querySelectorAll('#t thead th').length + '">還沒有回饋。播放影片，按 D／F 標起訖點記下意見。</td></tr>';
+  }
+}
+function makeRow(range, slide, fb) {
+  const tr = document.createElement('tr');
+  let html =
+    '<td class="range" onclick="seekTo(parseRange(this.textContent))" title="點擊跳到此處">' + range + '</td>' +
+    '<td class="slide" title="點擊跳到該簡報頁" onclick="jumpPageFromCell(this)">' + (slide || '') + '</td>' +
+    '<td class="fb">' + (fb || '') + '</td>';
+  for (let i = 0; i < extraColCount(); i++) html += '<td class="extra"></td>';
+  html += '';
+  tr.innerHTML = html;
+  return tr;
+}
+function jumpPageFromCell(td) {
+  const p = parseInt(td.textContent);
+  if (!p) return;
+  const i = MAP.findIndex(m => m.page === p);
+  if (i >= 0) { curMapIdx = i; seekTo(MAP[i].t); }
+  goToPage(p);
+}
+function addRow(range, slide, fb, focus) {
+  clearEmpty();
+  const r = range || (fmt(v.currentTime) + '-' + fmt(v.currentTime));
+  const tr = makeRow(r, slide, fb);
+  const tb = document.getElementById('tb');
+  const start = parseRange(r);
+  const ref = Array.from(tb.querySelectorAll('tr:not(.empty)')).find(row => parseRange(row.querySelector('.range').textContent) > start);
+  if (ref) tb.insertBefore(tr, ref); else tb.appendChild(tr);
+  updCount(); autoSave();
+  if (focus) { const c = tr.querySelector('.fb'); c.focus(); c.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+}
+function parseEndOf(tr) {
+  const parts = tr.querySelector('.range').textContent.split('-');
+  if (parts.length > 1) { const m = parts[1].match(/(\d+):(\d+)/); if (m) return (+m[1]) * 60 + (+m[2]); }
+  return parseRange(tr.querySelector('.range').textContent);
+}
+function addManualRow() {
+  clearEmpty();
+  const tb = document.getElementById('tb');
+  const t = Math.floor(v.currentTime);
+  const rows = Array.from(tb.querySelectorAll('tr:not(.empty)'));
+  let prev = null;
+  rows.forEach(row => { if (parseRange(row.querySelector('.range').textContent) <= t) prev = row; });
+  const next = rows.find(row => parseRange(row.querySelector('.range').textContent) > t) || null;
+  const endT = next ? parseRange(next.querySelector('.range').textContent) : (prev ? parseEndOf(prev) : VEND);
+  const curPage = MAP[curMapIdx] ? MAP[curMapIdx].page : '';
+  const tr = makeRow(fmt(t) + '-' + fmt(endT), curPage, '');
+  if (next) tb.insertBefore(tr, next); else tb.appendChild(tr);
+  if (prev) { const ps = parseRange(prev.querySelector('.range').textContent); prev.querySelector('.range').textContent = fmt(ps) + '-' + fmt(t); }
+  updCount(); autoSave();
+  const c = tr.querySelector('.fb'); c.focus(); c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function delRow(btn) { btn.closest('tr').remove(); showEmptyIfNone(); updCount(); autoSave(); }
+function sortRows() {
+  const tb = document.getElementById('tb');
+  const rows = Array.from(tb.querySelectorAll('tr:not(.empty)'));
+  rows.sort((x, y) => parseRange(x.querySelector('.range').textContent) - parseRange(y.querySelector('.range').textContent));
+  rows.forEach(r => tb.appendChild(r));
+  autoSave();
+}
+// 已移除「手動編輯區間失焦就自動重排＋連動改秒數」的舊行為，避免覆蓋審核中的秒數。
+// 手動改秒數後若要重新排序，請按工具列「依時間排序」（只排序、不改秒數）。
+function updCount() { document.getElementById('count').textContent = document.querySelectorAll('#tb tr:not(.empty)').length + ' 則'; }
+// 在被點的欄位「右側」就地插入一個新欄；欄名可直接在表頭輸入
+function addColumnAt(btn) {
+  const th = btn.closest('th');
+  const headRow = th.parentNode;
+  const idx = Array.from(headRow.children).indexOf(th);
+  const nth = document.createElement('th');
+  nth.innerHTML = '<span class="colname">新欄位</span>' +
+    '';
+  th.after(nth);
+  document.querySelectorAll('#tb tr').forEach(tr => {
+    const empty = tr.querySelector('td[colspan]');
+    if (empty) { empty.setAttribute('colspan', headRow.children.length); return; }
+    const td = document.createElement('td'); td.className = 'extra'; td.setAttribute('contenteditable', 'true');
+    const ref = tr.children[idx + 1] || null;
+    tr.insertBefore(td, ref);
+  });
+  autoSave();
+  const nm = nth.querySelector('.colname');
+  if (nm) { nm.focus(); const r = document.createRange(); r.selectNodeContents(nm); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+}
+function delColumn(btn) {
+  if (!confirm('刪除這個欄位（連同每列的內容）？')) return;
+  const th = btn.closest('th');
+  const idx = Array.from(th.parentNode.children).indexOf(th);
+  th.remove();
+  document.querySelectorAll('#tb tr').forEach(tr => {
+    const empty = tr.querySelector('td[colspan]');
+    if (empty) { empty.setAttribute('colspan', document.querySelectorAll('#t thead th').length); return; }
+    if (tr.children[idx]) tr.children[idx].remove();
+  });
+  autoSave();
+}
+document.addEventListener('keydown', e => {
+  if (e.target.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) { if (e.key === 'Escape') e.target.blur(); return; }
+  if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); seekRel(e.shiftKey ? -10 : -3); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); seekRel(e.shiftKey ? 10 : 3); }
+  else if (e.code === 'KeyD') { e.preventDefault(); markStart(); }
+  else if (e.code === 'KeyF') { e.preventDefault(); markEnd(); }
+});
+function exportNotes() {
+  const rows = Array.from(document.querySelectorAll('#tb tr:not(.empty)'));
+  let txt = EXPORT_TITLE + '\n' + '='.repeat(30) + '\n\n';
+  if (!rows.length) txt += '（無回饋）\n';
+  rows.forEach(r => {
+    const range = r.querySelector('.range').textContent.trim();
+    const slide = r.querySelector('.slide').textContent.trim();
+    const fb = r.querySelector('.fb').textContent.trim();
+    txt += '[' + range + ']' + (slide ? '（簡報 P' + slide + '）' : '') + '　' + (fb || '（待填）') + '\n';
+  });
+  const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = EXPORT_FILE; a.click();
+}
+function autoSave() {
+  clearTimeout(autoSave._t);
+  autoSave._t = setTimeout(async () => {
+    localStorage.setItem(SKEY, document.getElementById('t').innerHTML);
+    const now = new Date();
+    document.getElementById('savetime').textContent = '自動存 ' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    if (fileHandle) { try { await writeFile(); } catch (e) {} }
+  }, 800);
+}
+document.addEventListener('input', e => { if (e.target.closest('#t')) autoSave(); });
+function prefillMapping() {
+  clearEmpty();
+  const tb = document.getElementById('tb');
+  tb.innerHTML = '';
+  MAP.forEach((m, i) => {
+    const end = i < MAP.length - 1 ? MAP[i + 1].t : VEND;
+    tb.appendChild(makeRow(fmt(m.t) + '-' + fmt(end), m.page, ''));
+  });
+  updCount();
+}
+function restore() {
+  const saved = localStorage.getItem(SKEY);
+  if (!saved) { updCount(); return; }
+  const s = saved.trim();
+  if (s.startsWith('[')) { prefillMapping(); return; }
+  try { document.getElementById('t').innerHTML = s; updCount(); } catch (e) { prefillMapping(); }
+}
+// 確保每個資料欄表頭都有「＋／✕」欄位控制項（相容舊快取，不重複）
+function initColControls() {
+  const headRow = document.querySelector('#t thead tr');
+  if (!headRow) return;
+  Array.from(headRow.children).forEach((th, i) => {
+    if (th.classList.contains('act-h')) return;
+    th.querySelectorAll(':scope > .delcol').forEach(b => b.remove());
+    if (th.querySelector('.colctl')) return;
+    const core = i < 3;
+    const ctl = document.createElement('span');
+    ctl.className = 'colctl';
+    ctl.innerHTML = '<button class="addcol" title="在此欄右側插入新欄" onclick="addColumnAt(this)">＋</button>' +
+      (core ? '' : '<button class="delcol" title="刪除此欄" onclick="delColumn(this)">✕</button>');
+    th.appendChild(ctl);
+  });
+}
+restore();
+initColControls();
+initActButtons();
+function resetCache() {
+  if (!confirm('確定清除本機回饋快取並重新載入？（會還原成初始配對，已存出的檔案不受影響）')) return;
+  localStorage.removeItem(SKEY); location.reload();
+}
+let fileHandle = null;
+async function writeFile() {
+  const w = await fileHandle.createWritable();
+  const clone = document.documentElement.cloneNode(true);
+  const p = clone.querySelector('#pending'); if (p) p.textContent = '';
+  await w.write('<!DOCTYPE html>\n' + clone.outerHTML);
+  await w.close();
+}
+async function saveFile() {
+  try {
+    if (!fileHandle) {
+      if (!window.showSaveFilePicker) { alert('此瀏覽器不支援直接寫檔，請改用「匯出回饋清單」。\n（建議用 Chrome／Edge 開啟）'); return; }
+      fileHandle = await window.showSaveFilePicker({ suggestedName: SAVE_FILE, types: [{ description: 'HTML', accept: { 'text/html': ['.html'] } }] });
+    }
+    await writeFile();
+    const now = new Date();
+    document.getElementById('savetime').textContent = '已存檔 ' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+  } catch (e) { if (e.name !== 'AbortError') alert('存檔失敗：' + e.message); }
+}
+window.addEventListener('beforeunload', () => localStorage.setItem(SKEY, document.getElementById('t').innerHTML));
+</script>
+
+<script>
+/* 剪輯師線上版：唯讀、無本機影片，停用編輯與存檔 */
+function saveFile(){} function resetCache(){} function autoSave(){}
+function addRow(){} function delRow(){} function addRowBelow(){} function addManualRow(){}
+function sortRows(){} function addColumnAt(){} function delColumn(){}
+function markStart(){} function markEnd(){} function initActButtons(){} function initColControls(){}
+</script>
+<script src="https://hypothes.is/embed.js" async></script>
+</body></html>

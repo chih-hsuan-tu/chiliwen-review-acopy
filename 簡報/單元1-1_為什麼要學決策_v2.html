@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>單元 1-1 為什麼要學決策（A copy 對齊版）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* 1-1 專用新元件（不動共用 styles.css，避免影響其他單元） */
+.callout-gold {
+  background: #FBF3DF; border-left: 8px solid #C49A36;
+  padding: 22px 34px; border-radius: 4px; font-size: 27px;
+  color: #1a1a1a; line-height: 1.6; margin-top: 30px;
+}
+.callout-gold strong { color: #9A7A2E; }
+.sub-bullets { list-style: none; padding: 0; margin: 10px 0 0; }
+.sub-bullets li { position: relative; padding-left: 26px; font-size: 25px; color: #3f3f3f; line-height: 1.55; margin-bottom: 8px; }
+.sub-bullets li::before { content: "—"; position: absolute; left: 0; color: #002598; font-weight: 700; }
+/* 由上而下的長方框（角色升級／分層） */
+.mstack { display: flex; flex-direction: column; gap: 20px; margin-top: 30px; }
+.mbar { display: flex; align-items: center; gap: 34px; background: #fff; border: 2px solid #c8d2e6; border-radius: 8px; padding: 26px 44px; }
+.mbar.is-top { border-color: #002598; background: #F8FAFE; }
+.mbar .mbar-title { flex: 0 0 320px; font-size: 32px; font-weight: 900; color: #002598; }
+.mbar .mbar-desc { font-size: 26px; color: #3f3f3f; line-height: 1.55; }
+.mbar .mbar-desc .hl { background: #FBF3DF; font-weight: 700; color: #1a1a1a; padding: 2px 6px; }
+/* 勝率對比兩欄（置中、等寬、灰字不換行） */
+.stats-row.duo { grid-template-columns: auto auto; justify-content: center; gap: 72px; }
+.stats-row.duo .stat-card { width: 600px; max-width: none; }
+.stats-row.duo .stat-source { white-space: nowrap; }
+.stats-row.duo .stat-card.lose .stat-num { color: #98a2b8; }
+/* 盲點頁的前導句 */
+.lead-note { font-size: 26px; color: #3f3f3f; line-height: 1.6; margin: 18px 0 4px; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 1 封面 -->
+<section class="slide cover">
+  <div class="cover-num">單元 1-1</div>
+  <div class="cover-divider"></div>
+  <div class="cover-title">為什麼每個人都要學決策<br>打造高勝率的決策系統</div>
+  <div class="cover-author">齊立文</div>
+</section>
+
+<!-- 2 決策的普遍性 -->
+<section class="slide">
+  <div class="tab">決策的普遍性</div>
+  <h1 class="title">決策不高大上，它就是你每天都在做的決定</h1>
+
+  <ul class="bullets">
+    <li>一進辦公室，就在做決定：做這件、不做那件
+      <ul><li>這就是輕重緩急的判斷，也是機會成本的換算</li></ul>
+    </li>
+    <li>不是只有主管要決策
+      <ul><li>主管最得力的同仁，是帶著解決方案和建議來，而不是把問題攤開求指示</li></ul>
+    </li>
+    <li>遇到難題，你至少要做判斷、提方案</li>
+  </ul>
+
+  <div class="callout-gold">決策，就是每一位工作者每天都在運用的<strong>核心能力</strong>。</div>
+
+  <div class="page-num">2 / 19</div>
+</section>
+
+<!-- 3 主管的角色 -->
+<section class="slide">
+  <div class="tab">主管的角色</div>
+  <h1 class="title">別退回「自己做」，要把能力變成可複製的系統</h1>
+
+  <div class="mstack">
+    <div class="mbar">
+      <div class="mbar-title">傑出的個人貢獻者</div>
+      <div class="mbar-desc">很會執行，能把自己的工作<span class="hl">做好做滿</span>。</div>
+    </div>
+    <div class="mbar">
+      <div class="mbar-title">帶人主管的陷阱</div>
+      <div class="mbar-desc">同事做不夠周延，忍不住下去盯、甚至感嘆「早知道自己做就好」。</div>
+    </div>
+    <div class="mbar is-top">
+      <div class="mbar-title">系統複製者</div>
+      <div class="mbar-desc">把擅長的能力變成<span class="hl">可複製的方法與系統</span>，讓團隊有很多個你。</div>
+    </div>
+  </div>
+
+  <div class="callout-gold">整個團隊一起變強，<strong>你個人也才有機會再上層樓</strong>。</div>
+  <div class="page-num">3 / 19</div>
+</section>
+
+<!-- 4 決策的重要性 -->
+<section class="slide">
+  <div class="tab">決策的重要性</div>
+  <h1 class="title">執行力是油門，決策力是方向盤</h1>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-card-header">執行力＝油門</div>
+      <div class="tool-card-body">
+        <ul class="sub-bullets">
+          <li>沒有油、油門壞了，固然哪裡都去不了</li>
+          <li>它決定你跑得多快、多用力</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">決策力＝方向盤</div>
+      <div class="tool-card-body">
+        <ul class="sub-bullets">
+          <li>方向轉錯，就算油箱加滿、油門踩到底</li>
+          <li>也只是更快抵達一個錯誤的終點</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout-gold">好的決策放大資源成效——把有限的資金與時間，精準砸在<strong>關鍵的槓桿點</strong>上。</div>
+  <div class="page-num">4 / 19</div>
+</section>
+
+<!-- 5 高勝率的複利 -->
+<section class="slide">
+  <div class="tab">高勝率的複利</div>
+  <h1 class="title">55% 對 45%，時間拉長就是天壤之別</h1>
+
+  <div class="stats-row duo">
+    <div class="stat-card">
+      <div class="stat-num">55%</div>
+      <div class="stat-label">每次決策勝率 55% 的公司</div>
+      <div class="stat-source">主動布局、防患未然，把每一棒都揮得有意義</div>
+    </div>
+    <div class="stat-card lose">
+      <div class="stat-num">45%</div>
+      <div class="stat-label">每次決策勝率 45% 的公司</div>
+      <div class="stat-source">每天忙著救火滅火，決策品質持續下降</div>
+    </div>
+  </div>
+
+  <div class="callout-gold">商業競爭是一場連續賽局：拉到三年、十年、三十年，兩者的市值與市占率，就是<strong>高勝率帶來的複利效應</strong>。</div>
+  <div class="page-num">5 / 19</div>
+</section>
+
+<!-- 6 決策的難度 -->
+<section class="slide">
+  <div class="tab">決策的難度</div>
+  <h1 class="title">決策難，難在兩個地方</h1>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-card-header">做決定這件事很難</div>
+      <div class="tool-card-body">
+        <ul class="sub-bullets">
+          <li>人本來就不喜歡做決定</li>
+          <li>怕做錯、不想擔責任、又期待做出完美決策</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">要決定的事本身很難</div>
+      <div class="tool-card-body">
+        <ul class="sub-bullets">
+          <li>容易解、甚至中等難度的問題，早就被別人處理掉了</li>
+          <li>送到你桌上的，往往是最棘手的</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="note-quote">歐巴馬：「只有真正困難的問題，或者看起來會『雙輸』的兩難局面，才會送到我的桌上。」</div>
+  <div class="page-num">6 / 19</div>
+</section>
+
+<!-- 7 四個障礙：損失厭惡 -->
+<section class="slide">
+  <div class="tab">為什麼人抗拒決策</div>
+  <h1 class="title">四個深層的心理與結構障礙</h1>
+
+  <div class="mstack">
+    <div class="mbar">
+      <div class="mbar-title">損失厭惡</div>
+      <div class="mbar-desc">失去的痛苦，是得到快樂的兩倍（康納曼）；做錯要擔責，難免想<span class="hl">明哲保身</span>。</div>
+    </div>
+  </div>
+  <div class="page-num">7 / 19</div>
+</section>
+
+<!-- 8 四個障礙：＋選擇的悖論 -->
+<section class="slide">
+  <div class="tab">為什麼人抗拒決策</div>
+  <h1 class="title">四個深層的心理與結構障礙</h1>
+
+  <div class="mstack">
+    <div class="mbar">
+      <div class="mbar-title">損失厭惡</div>
+      <div class="mbar-desc">失去的痛苦，是得到快樂的兩倍（康納曼）；做錯要擔責，難免想<span class="hl">明哲保身</span>。</div>
+    </div>
+    <div class="mbar">
+      <div class="mbar-title">選擇的悖論</div>
+      <div class="mbar-desc">資訊不是太少而是太多，大腦陷入<span class="hl">分析癱瘓</span>，總想再多看一份報告。</div>
+    </div>
+  </div>
+  <div class="page-num">8 / 19</div>
+</section>
+
+<!-- 9 四個障礙：＋不確定性增加 -->
+<section class="slide">
+  <div class="tab">為什麼人抗拒決策</div>
+  <h1 class="title">四個深層的心理與結構障礙</h1>
+
+  <div class="mstack">
+    <div class="mbar">
+      <div class="mbar-title">損失厭惡</div>
+      <div class="mbar-desc">失去的痛苦，是得到快樂的兩倍（康納曼）；做錯要擔責，難免想<span class="hl">明哲保身</span>。</div>
+    </div>
+    <div class="mbar">
+      <div class="mbar-title">選擇的悖論</div>
+      <div class="mbar-desc">資訊不是太少而是太多，大腦陷入<span class="hl">分析癱瘓</span>，總想再多看一份報告。</div>
+    </div>
+    <div class="mbar">
+      <div class="mbar-title">不確定性增加</div>
+      <div class="mbar-desc">決策是在預測未來，經驗再豐富也沒有 100% 把握，<span class="hl">昨日成功不保證明日不敗</span>。</div>
+    </div>
+  </div>
+  <div class="page-num">9 / 19</div>
+</section>
+
+<!-- 10 四個障礙：＋角色轉換的調適 -->
+<section class="slide">
+  <div class="tab">為什麼人抗拒決策</div>
+  <h1 class="title">四個深層的心理與結構障礙</h1>
+
+  <div class="mstack">
+    <div class="mbar">
+      <div class="mbar-title">損失厭惡</div>
+      <div class="mbar-desc">失去的痛苦，是得到快樂的兩倍（康納曼）；做錯要擔責，難免想<span class="hl">明哲保身</span>。</div>
+    </div>
+    <div class="mbar">
+      <div class="mbar-title">選擇的悖論</div>
+      <div class="mbar-desc">資訊不是太少而是太多，大腦陷入<span class="hl">分析癱瘓</span>，總想再多看一份報告。</div>
+    </div>
+    <div class="mbar">
+      <div class="mbar-title">不確定性增加</div>
+      <div class="mbar-desc">決策是在預測未來，經驗再豐富也沒有 100% 把握，<span class="hl">昨日成功不保證明日不敗</span>。</div>
+    </div>
+    <div class="mbar">
+      <div class="mbar-title">角色轉換的調適</div>
+      <div class="mbar-desc">剛上任或責任重大的主管，面對前所未有的決定，<span class="hl">心理壓力讓人想逃避</span>。</div>
+    </div>
+  </div>
+  <div class="page-num">10 / 19</div>
+</section>
+
+<!-- 11 小結 -->
+<section class="slide">
+  <div class="tab">小結</div>
+  <h1 class="title">把事情做對，更要做對的事情</h1>
+
+  <div class="def-label">管理大師杜拉克</div>
+  <div class="principle-box">
+    <ul class="principle-list">
+      <li style="font-size:27px; color:#3f3f3f; line-height:1.7; margin-bottom:16px;">
+        <strong class="h-gold">效率 Doing things right</strong>：把事情做對。
+      </li>
+      <li style="font-size:27px; color:#3f3f3f; line-height:1.7;">
+        <strong class="h-blue">效能 Doing the right things</strong>：做對的事情。
+      </li>
+    </ul>
+  </div>
+
+  <div class="callout-gold">AI 很會解題，但<strong>垃圾進、垃圾出</strong>：人要先精準釐清問題，找出「解決了它、其他問題就迎刃而解」的<strong>關鍵槓桿點</strong>，把資源聚焦在對的戰場。</div>
+  <div class="page-num">11 / 19</div>
+</section>
+
+<!-- 12 工作現場的盲點：系統一／二 -->
+<section class="slide">
+  <div class="tab">工作現場的盲點</div>
+  <h1 class="title">別把重大決策，外包給「系統一」</h1>
+
+  <div class="lead-note">工作現場最常見的盲點：只顧埋頭苦幹，卻忘了除了埋頭苦幹，偶爾也要<strong>抬起頭確認大局</strong>。</div>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-card-header">系統一　快思考</div>
+      <div class="tool-card-body">
+        <div class="tool-card-en">Fast Thinking</div>
+        <ul class="sub-bullets"><li>依賴直覺、經驗、本能</li><li>速度極快，但不費力</li></ul>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">系統二　慢思考</div>
+      <div class="tool-card-body">
+        <div class="tool-card-en">Slow Thinking</div>
+        <ul class="sub-bullets"><li>邏輯推理、數據分析、慎思慎行</li><li>準確，但非常耗能</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout-gold">一忙一累，就把判斷力委外給直覺，這是<strong>忙碌的詛咒</strong>。</div>
+  <div class="page-num">12 / 19</div>
+</section>
+
+<!-- 13 認知棄守 -->
+<section class="slide">
+  <div class="tab">工作現場的盲點</div>
+  <h1 class="title">小心把判斷外包給 AI，陷入「認知棄守」</h1>
+
+  <div class="def-label">認知棄守 Cognitive Surrender</div>
+  <div class="principle-box">
+    <ul class="principle-list">
+      <li style="font-size:27px; color:#3f3f3f; line-height:1.7;">
+        當我們把找答案、批判性思考和判斷，全都外包給 AI，就會慢慢放棄自己的認知能力。
+      </li>
+    </ul>
+  </div>
+
+  <div class="callout-gold">過度依賴 AI，短期讓事情變輕鬆，長期卻會<strong>削弱、而非提升</strong>你的能力。時時提醒自己：始終把<strong>人的判斷力</strong>放在決策的核心。</div>
+  <div class="page-num">13 / 19</div>
+</section>
+
+<!-- 14 另一個陷阱：猴子理論 -->
+<section class="slide">
+  <div class="tab">另一個陷阱</div>
+  <h1 class="title">別幫部屬做決定，小心猴子跳到你背上</h1>
+
+  <ul class="bullets">
+    <li>部屬帶著一堆症狀和問題進辦公室，問你「該怎麼辦」</li>
+    <li>你習慣性說「我想想、明天回你」
+      <ul><li>就在這一瞬間，猴子從部屬的背上，跳到了你的背上</li></ul>
+    </li>
+    <li>久而久之，主管忙不完還被說微管理
+      <ul><li>團隊最後變得只有執行力、沒有決斷力——反正搞砸了都是主管的責任</li></ul>
+    </li>
+  </ul>
+
+  <div class="note-quote">《哈佛商業評論》經典文章：〈誰背上了猴子？〉（Who's Got the Monkey?）</div>
+  <div class="page-num">14 / 19</div>
+</section>
+
+<!-- 15 機制與系統的力量 -->
+<section class="slide">
+  <div class="tab">機制與系統的力量</div>
+  <h1 class="title">把個人經驗，變成團隊的決策系統</h1>
+
+  <ul class="bullets">
+    <li>終極目標：哪天你不在、或往上晉升，團隊也能獨立做出跟你一樣、甚至更好的決策
+      <ul><li>從「一個人會」到「整個團隊都會」的系統化複製，正是主管培養接班人的責任</li></ul>
+    </li>
+    <li>像是建立一套「決策演算法」：把你的判斷邏輯輸入同仁的頭腦，讓他們自己迭代更新
+      <ul><li>有新情境、新資料進來，團隊套用這套系統，加上自己的經驗判斷，就能輸出高勝率成果</li></ul>
+    </li>
+  </ul>
+
+  <div class="callout-gold">這種<strong>基於原則的決策系統</strong>，需要主管和組織<strong>有方法地培養、有系統地建立</strong>。</div>
+  <div class="page-num">15 / 19</div>
+</section>
+
+<!-- 16 一套艱難決策的流程 -->
+<section class="slide">
+  <div class="tab">一套艱難決策的流程</div>
+  <h1 class="title">不追求完美，追求一次次超過 50% 的勝率</h1>
+
+  <ul class="stage-list">
+    <li>
+      <div class="stage-num">1</div>
+      <div class="stage-body">
+        <div class="stage-head">理解問題</div>
+        <div class="stage-desc">確認自己已經完全理解這道難題。</div>
+      </div>
+    </li>
+    <li>
+      <div class="stage-num">2</div>
+      <div class="stage-body">
+        <div class="stage-head">搜集並消化資料</div>
+        <div class="stage-desc">在充分消化所有現有資訊的前提下判斷。</div>
+      </div>
+    </li>
+    <li>
+      <div class="stage-num">3</div>
+      <div class="stage-body">
+        <div class="stage-head">做出機率上的最佳選擇</div>
+        <div class="stage-desc">只要某個選項能達到 51% 的成功機率，就做這個決定。</div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="note-quote">歐巴馬：「你面對的是機率問題，只能在不確定中做出機率上的最佳選擇，否則你會因追求完美而猶豫不決。」</div>
+  <div class="page-num">16 / 19</div>
+</section>
+
+<!-- 17 DCR -->
+<section class="slide">
+  <div class="tab">本課程的決策系統</div>
+  <h1 class="title">DCR：一套可複製的高勝率決策系統</h1>
+
+  <div class="tools-grid cols-3">
+    <div class="tool-card">
+      <div class="tool-card-header">D　定義問題</div>
+      <div class="tool-card-body">
+        <div class="tool-card-en">Define problems</div>
+        <ul class="sub-bullets"><li>找對問題、判斷驗證</li><li>把力氣用在對的地方</li></ul>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">C　整合資源</div>
+      <div class="tool-card-body">
+        <div class="tool-card-en">Coordinate resources</div>
+        <ul class="sub-bullets"><li>設計共識、借力使力</li><li>讓決策能有效執行</li></ul>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">R　團隊放大</div>
+      <div class="tool-card-body">
+        <div class="tool-card-en">Replicate results</div>
+        <ul class="sub-bullets"><li>提升團隊決策判斷力</li><li>讓成功經驗被系統性複製</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout-gold">這套系統要做到的，就是<strong>從一個人會，到整個團隊都會</strong>。</div>
+  <div class="page-num">17 / 19</div>
+</section>
+
+<!-- 18 三種工作者的轉變 -->
+<section class="slide">
+  <div class="tab">這堂課帶你完成的轉變</div>
+  <h1 class="title">三種工作者，都能升級自己的決策力</h1>
+
+  <ul class="action-list">
+    <li>
+      <div class="head">已在帶團隊的中階主管</div>
+      <ul class="sub-bullets"><li>從每天忙著救火、開會、簽核，到在對的時間做對的決策</li></ul>
+    </li>
+    <li>
+      <div class="head">需要策略判斷的部門負責人</div>
+      <ul class="sub-bullets"><li>面對快速變化，從靠經驗決策，升級到有框架應變</li></ul>
+    </li>
+    <li>
+      <div class="head">想提升思維層次的資深工作者</div>
+      <ul class="sub-bullets"><li>建立可複製的策略框架，遇到新問題也能快速解決</li></ul>
+    </li>
+  </ul>
+
+  <div class="page-num">18 / 19</div>
+</section>
+
+<!-- 19 單元學習重點 -->
+<section class="slide">
+  <div class="tab">單元學習重點</div>
+  <h1 class="title">這堂課，一定要帶走的重點</h1>
+
+  <ul class="bullets">
+    <li>決策力是方向盤，比油門更關鍵
+      <ul><li>方向錯了，執行力再強，也只是更快抵達錯誤的終點</li></ul>
+    </li>
+    <li>決策很難，難在四個障礙
+      <ul><li>損失厭惡、選擇的悖論、不確定性增加、角色轉換的調適</li></ul>
+    </li>
+    <li>別把判斷力外包出去
+      <ul><li>不論交給直覺「系統一」、還是交給 AI（認知棄守），都要把人的判斷放在核心</li></ul>
+    </li>
+    <li>別幫部屬做決定，把猴子留在他背上
+      <ul><li>否則團隊只剩執行力、沒有決斷力，搞砸了還是主管的責任</li></ul>
+    </li>
+    <li>把個人經驗變成團隊系統，不求完美、只求勝率
+      <ul><li>從「一個人會」到「整個團隊都會」，用 DCR 落地：定義問題、整合資源、團隊放大；追求一次次超過 50% 的勝率</li></ul>
+    </li>
+  </ul>
+
+  <div class="page-num">19 / 19</div>
+</section>
+
+</div>
+
+<script>
+function scaleStage() {
+  const stage = document.getElementById('stage');
+  const scale = Math.min(window.innerWidth / 1920, 1);
+  stage.style.transform = 'scale(' + scale + ')';
+  document.body.style.height = (stage.offsetHeight * scale) + 'px';
+}
+window.addEventListener('load', scaleStage);
+window.addEventListener('resize', scaleStage);
+document.fonts && document.fonts.ready.then(scaleStage);
+
+/* 嵌入遙控：審核頁用 postMessage 控制只顯示某一頁。正常開啟（無 ?embed）不受影響 */
+let embedMode = location.search.indexOf('embed') !== -1;
+function showOnly(page) {
+  embedMode = true;
+  const arr = Array.from(document.querySelectorAll('.slide'));
+  arr.forEach((s, i) => { s.style.display = (i === page - 1) ? '' : 'none'; });
+  scaleStage();
+}
+window.addEventListener('message', function (e) {
+  const d = e.data || {};
+  if (d.type === 'goto' && d.page) showOnly(d.page);
+});
+if (embedMode) window.addEventListener('load', function () { showOnly(1); });
+</script>
+</body>
+</html>
