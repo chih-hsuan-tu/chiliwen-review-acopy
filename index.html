@@ -379,13 +379,7 @@ function prefillMapping() {
   });
   updCount();
 }
-function restore() {
-  const saved = localStorage.getItem(SKEY);
-  if (!saved) { updCount(); return; }
-  const s = saved.trim();
-  if (s.startsWith('[')) { prefillMapping(); return; }
-  try { document.getElementById('t').innerHTML = s; updCount(); } catch (e) { prefillMapping(); }
-}
+function restore() { updCount(); }
 // 確保每個資料欄表頭都有「＋／✕」欄位控制項（相容舊快取，不重複）
 function initColControls() {
   const headRow = document.querySelector('#t thead tr');
@@ -428,7 +422,7 @@ async function saveFile() {
     document.getElementById('savetime').textContent = '已存檔 ' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
   } catch (e) { if (e.name !== 'AbortError') alert('存檔失敗：' + e.message); }
 }
-window.addEventListener('beforeunload', () => localStorage.setItem(SKEY, document.getElementById('t').innerHTML));
+
 </script>
 
 <script>
